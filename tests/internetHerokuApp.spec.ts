@@ -15,7 +15,14 @@ import {
   HorizontalSliderPage,
   HoversPage,
   JavaScriptAlertsPage,
-  KeyPressesPage
+  KeyPressesPage, 
+  MultipleWindowsPage,
+  NotificationMessagePage,
+  RedirectionPage,
+  StatusCodesPage,
+  ShadowDomPage,
+  SlowResourcesPage,
+  GeolocationPage
 } from '../pages/internet-herokuapp';
 
 
@@ -27,6 +34,8 @@ import {
   let dropDownPage: DropDownPage;
   let entryAddPage: EntryAddPage;
   let fileDownloaderPage: FileDownloaderPage;
+  let shadowDomPage: ShadowDomPage;
+  let slowResourcesPage: SlowResourcesPage;
   let floatingMenuPage: FloatingMenuPage;
   let framesPage: FramesPage;
   let nestedFramesPage: NestedFramesPage;
@@ -35,6 +44,12 @@ import {
   let hoversPage: HoversPage;
   let javaScriptAlertsPage: JavaScriptAlertsPage;
   let keyPressesPage: KeyPressesPage;
+  let multipleWindowsPage: MultipleWindowsPage;
+  let notificationMessagePage: NotificationMessagePage;
+  let redirectionPage: RedirectionPage;
+  let statusCodesPage: StatusCodesPage;
+  let geolocationPage: GeolocationPage;
+
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
@@ -45,6 +60,7 @@ import {
     dropDownPage = new DropDownPage(page);
     entryAddPage = new EntryAddPage(page);
     fileDownloaderPage = new FileDownloaderPage(page);
+    shadowDomPage = new ShadowDomPage(page);
     floatingMenuPage = new FloatingMenuPage(page);
     framesPage = new FramesPage(page);
     nestedFramesPage = new NestedFramesPage(page);
@@ -53,6 +69,12 @@ import {
     hoversPage = new HoversPage(page);
     javaScriptAlertsPage = new JavaScriptAlertsPage(page);
     keyPressesPage = new KeyPressesPage(page);
+    multipleWindowsPage = new MultipleWindowsPage(page);
+    notificationMessagePage = new NotificationMessagePage(page);
+    redirectionPage = new RedirectionPage(page);
+    statusCodesPage = new StatusCodesPage(page);
+    slowResourcesPage = new SlowResourcesPage(page);
+    geolocationPage = new GeolocationPage(page);
     await homePage.goto(process.env.BASE_URL ?? '');
     await homePage.waitForPageLoad();
   });
@@ -86,6 +108,7 @@ test.describe('Home Page Tests', () => {
   
   test.afterEach(async ({ page }) => {
             await page.close();
+
 });
 
 });
@@ -363,3 +386,113 @@ test('should navigate to Key Presses page and verify key press functionality', a
     await keyPressesPage.pressKey('ArrowDown');
     await expect(await keyPressesPage.getResultText()).toBe('You entered: DOWN');
 });
+
+test('should navigate to Multiple Windows page and verify new window functionality', async ({ page }) => {
+    await homePage.multipleWindowsLink.click();
+    await multipleWindowsPage.waitForPageLoad();
+    await expect(multipleWindowsPage.clickHereLink).toBeVisible();
+
+    // Hacer clic en el enlace "Click Here" para abrir una nueva ventana
+    const [newPage] = await Promise.all([
+        page.waitForEvent('popup'),
+        multipleWindowsPage.clickOnClickHereLink()
+    ]);
+
+    // Verificar que la nueva ventana se haya abierto y tenga el contenido esperado
+    await newPage.waitForLoadState();
+    await expect(newPage.locator('h3')).toHaveText('New Window');
+    await newPage.close();
+  });
+
+  test('should navigate to Notification Message page and verify notification message functionality', async ({ page }) => {
+    await homePage.notificationMessagesLink.click();
+    await notificationMessagePage.waitForPageLoad();
+    await expect(notificationMessagePage.header).toBeVisible();
+    await expect(notificationMessagePage.clickHereLink).toBeVisible();
+
+    const notificationTextBeforeClick = await notificationMessagePage.getNotificationMessageText();
+    await expect(notificationTextBeforeClick).toMatch('Action unsuccesful, please try again');
+
+    // Hacer clic en el enlace "Click Here" para mostrar un mensaje de notificación
+    await notificationMessagePage.clickHereLink.click();
+
+    // Verificar que el mensaje de notificación se muestre y contenga el texto esperado
+    const notificationTextAfterClick = await notificationMessagePage.getNotificationMessageText();
+    await expect(notificationTextAfterClick).toMatch('Action successful');
+  });
+
+  test('should navigate to Redirection page and verify redirection functionality', async ({ page }) => {
+    await homePage.redirectLinkLink.click();
+    await redirectionPage.waitForPageLoad();
+    await expect(redirectionPage.header).toBeVisible();
+    await expect(redirectionPage.clickHereLink).toBeVisible();
+
+    // Hacer clic en el enlace "here" para redirigir a otra página
+    await redirectionPage.clickHereLink.click();
+
+    // Verificar que la URL haya cambiado a la página de destino
+    await expect(page).toHaveURL(/\/status_codes$/);
+
+    // Verificas status codes page header
+    await expect(statusCodesPage.header).toBeVisible();
+    await expect(statusCodesPage.header).toHaveText('Status Codes');
+
+    // Verificar que los enlaces de códigos de estado estén visibles
+    await expect(statusCodesPage.statusCode200Link).toBeVisible();
+    await expect(statusCodesPage.statusCode301Link).toBeVisible();
+    await expect(statusCodesPage.statusCode404Link).toBeVisible();
+    await expect(statusCodesPage.statusCode500Link).toBeVisible();
+  });
+
+  test('should navigate to Shadow DOM page and verify shadow DOM content', async ({ page }) => {
+    await homePage.shadowDomLink.click();
+    await shadowDomPage.waitForPageLoad();
+    await expect(shadowDomPage.header).toBeVisible();
+
+    // Verificar el texto del elemento dentro del Shadow DOM
+    const shadowElementText = await shadowDomPage.getShadowElementText();
+    await expect(shadowElementText).toMatch(/^Let's have some different text!$/);
+
+    // Verificar el texto de los elementos de la lista dentro del Shadow DOM
+    const listItemText0 = await shadowDomPage.getListItemText(0);
+    const listItemText1 = await shadowDomPage.getListItemText(1);
+    await expect(listItemText0).toMatch(/^Let's have some different text!$/);
+    await expect(listItemText1).toBe('In a list!');
+
+  });
+
+  test('Should navigate to Slow Resources page and verify that the page loads successfully', async ({ page }) => {
+    test.setTimeout(45000);
+
+    const slowExternalResponsePromise = page.waitForResponse(
+      (response) => response.url().includes('/slow_external') && response.request().method() === 'GET',
+      { timeout: 35000 }
+    );
+
+    await homePage.slowResourcesLink.click();
+    const slowExternalResponse = await slowExternalResponsePromise;
+    await expect(slowExternalResponse.status()).toBe(503);
+    await expect(slowExternalResponse.statusText()).toBe('Service Unavailable');
+
+    await slowResourcesPage.waitForPageLoad();
+    await expect(slowResourcesPage.header).toBeVisible();
+    await expect(slowResourcesPage.header).toHaveText('Slow Resources');
+  });   
+
+  test('should navigate to Geolocation page and verify geolocation functionality', async ({ page }) => {
+    const latitude = 40.7128;
+    const longitude = -74.0060;
+    
+    // Configurar geolocalización para Nueva York
+    await page.context().grantPermissions(['geolocation']);
+    await page.context().setGeolocation({ latitude, longitude });
+    
+    await homePage.geolocationLink.click();
+    await geolocationPage.waitForPageLoad();
+    await expect(geolocationPage.header).toBeVisible();
+
+    // Obtener la ubicación y verificar que contenga valores válidos
+    const location = await geolocationPage.getLocation();
+    await expect(location.latitude).toMatch(latitude.toString());
+    await expect(location.longitude).toMatch(longitude.toString());
+  });

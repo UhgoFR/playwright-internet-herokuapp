@@ -111,5 +111,4 @@ export class HomePage extends BasePage {
         this.elementalSeleniumLink = page.getByRole('link', { name: 'Elemental Selenium' });
     }
 
-
 }   
