@@ -1,12 +1,12 @@
 import {expect } from '@playwright/test';
-import { test } from '../fixtures/my-fixtures';
+import { test } from '../../fixtures/my-fixtures';
 
 import { 
   HomePage,             
   FileDownloaderPage,
   FileUploaderPage,
   JQueryUIPage,
-} from '../pages/internet-herokuapp';
+} from '../../pages/internet-herokuapp';
 
 let homePage: HomePage;
 let fileDownloaderPage: FileDownloaderPage;
@@ -26,7 +26,7 @@ test.afterEach(async ({ page }) => {
     await page.close();
   });
 
-test('should download files and verify their existence', async ({tmpDir }) => {
+test('should download files and verify their existence @fixtures-test, @heroku-app', async ({tmpDir }) => {
     await homePage.fileDownloadLink.click();
     await fileDownloaderPage.waitForPageLoad();
 
@@ -51,7 +51,7 @@ test('should download files and verify their existence', async ({tmpDir }) => {
     await expect(someFilePath).toBeTruthy();
 });
 
-test('should upload a file and verify the uploaded file name', async ({ page }) => {
+test('should upload a file and verify the uploaded file name @fixtures-test, @heroku-app', async ({ page }) => {
     await homePage.fileUploadLink.click();
     await fileUploaderPage.waitForPageLoad();
 
@@ -62,7 +62,7 @@ test('should upload a file and verify the uploaded file name', async ({ page }) 
     expect(uploadedFileName).toBe('uploadfile.txt');      
 });
 
-test('should download files from JQueryUI menu and verify their existence', async ({ tmpDir }) => {
+test('should download files from JQueryUI menu and verify their existence @fixtures-test, @heroku-app', async ({ tmpDir }) => {
     await homePage.jqueryUiMenusLink.click();
     await jqueryUIPage.waitForPageLoad();
 

@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import {BasicAuthPage, DigestAuthPage, HomePage} from '../pages/internet-herokuapp';
+import {BasicAuthPage, DigestAuthPage, HomePage} from '../../pages/internet-herokuapp';
 
 
 let homePage: HomePage;
@@ -11,7 +11,7 @@ let password: string = process.env.password ?? '';
 
 
 
-test.describe('Basic Authentication Tests', () => {
+test.describe('Basic Authentication Tests @auth-tests, @heroku-app', () => {
 
   test.beforeEach(async ({ browser}) => {
     // 1. Creamos contexto con credenciales
@@ -26,20 +26,20 @@ test.describe('Basic Authentication Tests', () => {
     await homePage.waitForPageLoad();
   });
 
-  test('Basic Auth: should display success message after successful authentication', async () => {
+  test('Basic Auth: should display success message after successful authentication @auth-tests, @heroku-app', async () => {
     await homePage.basicAuthLink.click();
     await expect(basicAuthPage.header).toBeVisible();
     await expect(basicAuthPage.subHeader).toBeVisible();
   });
 
-  test('Digest Authentication: should display success message after successful authentication', async () => {
+  test('Digest Authentication: should display success message after successful authentication @auth-tests, @heroku-app', async () => {
     homePage.digestAuthenticationLink.click();
     await expect(digestAuthPage.header).toBeVisible();
     await expect(digestAuthPage.subHeader).toBeVisible();
   });
 });
 
-test('Basic Auth: Login exitoso con Basic Auth', async ({ browser }) => {
+test('Basic Auth: Login exitoso con Basic Auth @auth-tests, @heroku-app', async ({ browser }) => {
   // 1. Creamos contexto con credenciales
   const context = await browser.newContext({
     httpCredentials: { username: username, password: password }
@@ -54,7 +54,7 @@ test('Basic Auth: Login exitoso con Basic Auth', async ({ browser }) => {
   await expect(mensaje).toContainText('Congratulations!');
 });
 
-test('Digest Auth: Login exitoso con Digest Auth', async ({ browser }) => {
+test('Digest Auth: Login exitoso con Digest Auth @auth-tests, @heroku-app', async ({ browser }) => {
   // 1. Creamos contexto con credenciales
   const context = await browser.newContext({
     httpCredentials: { username: username, password: password }

@@ -1,5 +1,5 @@
 import { test,expect } from "playwright/test";
-import { HomePage, ChallenginDomPage } from "../pages/internet-herokuapp";
+import { HomePage, ChallenginDomPage } from "../../pages/internet-herokuapp";
 
 test.describe('Challenging DOM Page Tests', () => {
 

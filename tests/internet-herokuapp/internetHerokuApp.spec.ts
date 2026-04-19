@@ -23,7 +23,7 @@ import {
   ShadowDomPage,
   SlowResourcesPage,
   GeolocationPage
-} from '../pages/internet-herokuapp';
+} from '../../pages/internet-herokuapp';
 
 
   let homePage: HomePage;
@@ -85,7 +85,7 @@ import {
 
   
 
-test.describe('Home Page Tests', () => {
+test.describe('Home Page Tests @heroku-app', () => {
 
 
   test.beforeEach(async ({ page }) => {
@@ -113,7 +113,7 @@ test.describe('Home Page Tests', () => {
 
 });
 
-test('should navigate to Challenging DOM page and see all the elements', async () => {
+test('should navigate to Challenging DOM page and see all the elements @heroku-app', async () => {
         await homePage.challengingDomLink.click();
         await challenginDomPage.waitForPageLoad();
         await expect(challenginDomPage.header).toBeVisible();
@@ -128,7 +128,7 @@ test('should navigate to Challenging DOM page and see all the elements', async (
         await expect(challenginDomPage.header).toHaveText('Challenging DOM');
     });
 
-test('Should interact with checkboxes and verify their state', async () => {
+test('Should interact with checkboxes and verify their state @heroku-app', async () => {
     await homePage.checkboxesLink.click();
     await checkBoxesPage.waitForPageLoad();
     await expect(checkBoxesPage.header).toBeVisible();
@@ -159,7 +159,7 @@ test('Should interact with checkboxes and verify their state', async () => {
     await expect(checkBoxesPage.checkboxOne).toBeChecked();
     await expect(checkBoxesPage.checkboxTwo).toBeChecked();
 }); 
-test('debe mostrar alerta al hacer clic derecho', async ({ page }) => {
+test('debe mostrar alerta al hacer clic derecho @heroku-app', async ({ page }) => {
     await homePage.contextMenuLink.click();
     await contextMenuPage.waitForPageLoad();
 
@@ -168,7 +168,7 @@ test('debe mostrar alerta al hacer clic derecho', async ({ page }) => {
     await expect(dialog).toBeTruthy();  
 });
 
-test('should drag and drop element A to B and then B to A', async ({ page }) => {
+test('should drag and drop element A to B and then B to A @heroku-app', async ({ page }) => {
     await homePage.dragAndDropLink.click();
     //await page.pause();
     await dragAndDropPage.waitForPageLoad();
@@ -194,7 +194,7 @@ test('should drag and drop element A to B and then B to A', async ({ page }) => 
      await expect(dragAndDropPage.columnB).toHaveText('A'); 
 }); 
 
-test('should select an option from the dropdown and verify the selection', async ({ page }) => {
+test('should select an option from the dropdown and verify the selection @heroku-app', async ({ page }) => {
     await homePage.dropdownLink.click();
     await dropDownPage.waitForPageLoad();
     await expect(dropDownPage.header).toBeVisible();
@@ -213,7 +213,7 @@ test('should select an option from the dropdown and verify the selection', async
     await expect(selectedOption2).toBe('2');
 });
 
-test('should add a new entry and verify its content', async ({ page }) => {
+test('should add a new entry and verify its content @heroku-app', async ({ page }) => {
     await homePage.entryAdLink.click();
     await entryAddPage.waitForPageLoad();
    
@@ -231,7 +231,7 @@ test('should add a new entry and verify its content', async ({ page }) => {
 
 });
 
-test('should verify the floating menu is visible and functional', async ({ page }) => {
+test('should verify the floating menu is visible and functional @heroku-app', async ({ page }) => {
     await homePage.floatingMenuLink.click();
     await floatingMenuPage.waitForPageLoad();
     await expect(floatingMenuPage.header).toBeVisible();
@@ -261,7 +261,7 @@ test('should verify the floating menu is visible and functional', async ({ page 
     await expect(page).toHaveURL(/^https?:\/\/.*#about$/);
 });
 
-test('should navigate to Frames page and verify nested frames content', async ({ page }) => {
+test('should navigate to Frames page and verify nested frames content @heroku-app', async ({ page }) => {
     await homePage.framesLink.click();
     await framesPage.waitForPageLoad();
     await expect(framesPage.header).toBeVisible();
@@ -285,7 +285,7 @@ test('should navigate to Frames page and verify nested frames content', async ({
 
 });
 
-test('should navigate to iFrame page and verify the content inside the iFrame', async ({ page }) => {
+test('should navigate to iFrame page and verify the content inside the iFrame @heroku-app', async ({ page }) => {
     await homePage.framesLink.click();
     await framesPage.waitForPageLoad();
     await expect(framesPage.header).toBeVisible();
@@ -303,7 +303,7 @@ test('should navigate to iFrame page and verify the content inside the iFrame', 
 
 });
 
-test('should navigate to Horizontal Slider page and verify slider functionality', async ({ page }) => {
+test('should navigate to Horizontal Slider page and verify slider functionality @heroku-app', async ({ page }) => {
     await homePage.horizontalSliderLink.click();
     await horizontalSliderPage.waitForPageLoad();
     await expect(horizontalSliderPage.header).toBeVisible();
@@ -321,7 +321,7 @@ test('should navigate to Horizontal Slider page and verify slider functionality'
     await expect(sliderValue2).toBe('5');
 });
 
-test('should navigate to Hovers page and verify hover functionality', async ({ page }) => {
+test('should navigate to Hovers page and verify hover functionality @heroku-app', async ({ page }) => {
     await homePage.hoversLink.click();
     await hoversPage.waitForPageLoad();
     await expect(hoversPage.header).toBeVisible();
@@ -349,7 +349,7 @@ test('should navigate to Hovers page and verify hover functionality', async ({ p
 
 });
 
-test('should navigate to JavaScript Alerts page and verify alert functionality', async ({ page }) => {
+test('should navigate to JavaScript Alerts page and verify alert functionality @heroku-app', async ({ page }) => {
     await homePage.javascriptAlertsLink.click();
     await javaScriptAlertsPage.waitForPageLoad();
     await expect(javaScriptAlertsPage.header).toBeVisible();
@@ -369,7 +369,7 @@ test('should navigate to JavaScript Alerts page and verify alert functionality',
 
 });
     
-test('should navigate to Key Presses page and verify key press functionality', async ({ page }) => {
+test('should navigate to Key Presses page and verify key press functionality @heroku-app', async ({ page }) => {
     await homePage.keyPressesLink.click();
     await keyPressesPage.waitForPageLoad();
     await expect(keyPressesPage.header).toBeVisible();
@@ -387,7 +387,7 @@ test('should navigate to Key Presses page and verify key press functionality', a
     await expect(await keyPressesPage.getResultText()).toBe('You entered: DOWN');
 });
 
-test('should navigate to Multiple Windows page and verify new window functionality', async ({ page }) => {
+test('should navigate to Multiple Windows page and verify new window functionality @heroku-app', async ({ page }) => {
     await homePage.multipleWindowsLink.click();
     await multipleWindowsPage.waitForPageLoad();
     await expect(multipleWindowsPage.clickHereLink).toBeVisible();
@@ -404,7 +404,7 @@ test('should navigate to Multiple Windows page and verify new window functionali
     await newPage.close();
   });
 
-  test('should navigate to Notification Message page and verify notification message functionality', async ({ page }) => {
+  test('should navigate to Notification Message page and verify notification message functionality @heroku-app', async ({ page }) => {
     await homePage.notificationMessagesLink.click();
     await notificationMessagePage.waitForPageLoad();
     await expect(notificationMessagePage.header).toBeVisible();
@@ -421,7 +421,7 @@ test('should navigate to Multiple Windows page and verify new window functionali
     await expect(notificationTextAfterClick).toMatch('Action successful');
   });
 
-  test('should navigate to Redirection page and verify redirection functionality', async ({ page }) => {
+  test('should navigate to Redirection page and verify redirection functionality @heroku-app', async ({ page }) => {
     await homePage.redirectLinkLink.click();
     await redirectionPage.waitForPageLoad();
     await expect(redirectionPage.header).toBeVisible();
@@ -444,7 +444,7 @@ test('should navigate to Multiple Windows page and verify new window functionali
     await expect(statusCodesPage.statusCode500Link).toBeVisible();
   });
 
-  test('should navigate to Shadow DOM page and verify shadow DOM content', async ({ page }) => {
+  test('should navigate to Shadow DOM page and verify shadow DOM content @heroku-app', async ({ page }) => {
     await homePage.shadowDomLink.click();
     await shadowDomPage.waitForPageLoad();
     await expect(shadowDomPage.header).toBeVisible();
@@ -461,7 +461,7 @@ test('should navigate to Multiple Windows page and verify new window functionali
 
   });
 
-  test('Should navigate to Slow Resources page and verify that the page loads successfully', async ({ page }) => {
+  test('Should navigate to Slow Resources page and verify that the page loads successfully @heroku-app', async ({ page }) => {
     test.setTimeout(45000);
 
     const slowExternalResponsePromise = page.waitForResponse(
@@ -479,7 +479,7 @@ test('should navigate to Multiple Windows page and verify new window functionali
     await expect(slowResourcesPage.header).toHaveText('Slow Resources');
   });   
 
-  test('should navigate to Geolocation page and verify geolocation functionality', async ({ page }) => {
+  test('should navigate to Geolocation page and verify geolocation functionality @heroku-app', async ({ page }) => {
     const latitude = 40.7128;
     const longitude = -74.0060;
     
