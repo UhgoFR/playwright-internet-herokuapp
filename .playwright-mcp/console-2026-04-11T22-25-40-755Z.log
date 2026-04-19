@@ -1,2 +1,0 @@
-[     745ms] [ERROR] Failed to load resource: net::ERR_NAME_NOT_RESOLVED @ https://298279967.log.optimizely.com/event?a=298279967&d=298279967&y=false&n=https%3A%2F%2Fthe-internet.herokuapp.com%2F&u=oeu1775946341415r0.809311184276643&wxhr=true&t=1775946341419&f=298349752,318188263:0
-[     991ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ https://the-internet.herokuapp.com/favicon.ico:0
