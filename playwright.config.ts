@@ -56,15 +56,34 @@ export default defineConfig({
       dependencies: ['setup'],
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
-
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+     {
+       name: 'firefox-herokuapp',
+       testDir: './tests/internet-herokuapp',
+       use: { ...devices['Desktop Firefox'] },
+     },
+    {
+       name: 'firefox-saucedemo',
+       testDir: './tests/sauce-demo',
+       use: { ...devices['Desktop Firefox'] 
+       // Use prepared auth state.
+       //storageState: './.auth/auth_standard.json',
+       },
+        dependencies: ['setup'],
+     },
+    {
+      name: 'webkit-herokuapp',
+      testDir: './tests/internet-herokuapp',
+      use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'webkit-saucedemo',
+      testDir: './tests/sauce-demo',
+      use: { ...devices['Desktop Safari'] 
+      // Use prepared auth state.
+      //storageState: './.auth/auth_standard.json',
+      },
+       dependencies: ['setup'],
+    },
 
     /* Test against mobile viewports. */
     // {
