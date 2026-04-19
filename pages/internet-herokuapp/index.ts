@@ -26,3 +26,4 @@ export * from './DigestAuthPage';
 export * from './ShadowDomPage';
 export * from './SlowResourcesPage';
 export * from './GeolocationPage';
+export * from './DataTablePage';
