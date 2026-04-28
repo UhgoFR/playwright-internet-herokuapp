@@ -8,8 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node", "@playwright/test"]
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "tests/**/*",
